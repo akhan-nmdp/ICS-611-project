@@ -1,6 +1,8 @@
 // import logo from './logo.svg';
 // import './App.css';
 import Books from "./Books";
+import Members from "./Members";
+import Librarians from "./Librarians";
 
 // function App() {
 //   return (
@@ -28,6 +30,8 @@ function App() {
     <div>
       <h1 style={{textAlign: "center"}}>Awesome Library System</h1>
       <Books />
+      <Members />
+      <Librarians />
     </div>
   );
 }
