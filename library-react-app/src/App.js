@@ -1,38 +1,19 @@
-// import logo from './logo.svg';
-// import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./Home";
 import Books from "./Books";
 import Members from "./Members";
 import Librarians from "./Librarians";
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
-
 function App() {
   return (
-    <div>
-      <h1 style={{textAlign: "center"}}>Awesome Library System</h1>
-      <Books />
-      <Members />
-      <Librarians />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/books" element={<Books />} />
+        <Route path="/members" element={<Members />} />
+        <Route path="/librarians" element={<Librarians />} />
+      </Routes>
+    </Router>
   );
 }
 

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Books() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch data from API
@@ -22,21 +24,15 @@ function Books() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-  //display in simple manner
-//   return (
-//     <div style={{ maxWidth: "600px", margin: "auto", textAlign: "left" }}>
-//       <h1>Books</h1>
-//       <ul style={{ listStyle: "none", padding: 0 }}>
-//         {books.map(book => (
-//           <li key={book.bookId}  style={{ padding: "10px", borderBottom: "1px solid #ccc" }}> {book.isbn} <strong>{book.title}</strong> {book.author} {book.genre} {book.availability ? "Yes" : "No"}</li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// }
   return (
     <div style={{ maxWidth: "600px", margin: "auto", textAlign: "center" }}>
       <h1>Book List</h1>
+      <button 
+        onClick={() => navigate("/")} 
+        style={{ marginBottom: "20px", padding: "8px 15px", cursor: "pointer" }}
+      >
+                Go Back
+                </button>
       <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "20px" }}>
         <thead>
           <tr style={{ background: "#ddd" }}>
