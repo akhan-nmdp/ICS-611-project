@@ -31,21 +31,6 @@ public class Application {
             DynamoDBMapper dynamoDBMapper = new DynamoDBMapper(amazonDynamoDB);
             ListTablesResult allTables = amazonDynamoDB.listTables();
 
-//            if (!allTables.getTableNames().contains("ProductInfo")) {
-//                log.info("create the table");
-//                CreateTableRequest tableRequest = dynamoDBMapper.generateCreateTableRequest(ProductInfo.class);
-////
-//                tableRequest.setProvisionedThroughput(new ProvisionedThroughput(1L, 1L));
-////
-//                amazonDynamoDB.createTable(tableRequest);
-//                log.info("add data");
-//                ProductInfo productInfo = new ProductInfo("1", "2");
-//                log.info("save data");
-//                productInfoRepository.save(productInfo);
-//            } else {
-//                log.info("Table already exists. skipping creating and insert data part.");
-//            }
-
             if (!allTables.getTableNames().contains("Books")) {
                 log.info("create the table Books");
                 CreateTableRequest tableRequest = dynamoDBMapper.generateCreateTableRequest(Books.class);
@@ -104,8 +89,8 @@ public class Application {
                 log.info("Table Members already exists. skipping creating and insert data part.");
             }
 
-            if (!allTables.getTableNames().contains("BorrowedBooks")) {
-                log.info("create the table BorrowedBooks");
+            if (!allTables.getTableNames().contains("Borrowed_Books")) {
+                log.info("create the table Borrowed_Books");
                 CreateTableRequest tableRequest = dynamoDBMapper.generateCreateTableRequest(BorrowedBooks.class);
 
                 tableRequest.setProvisionedThroughput(new ProvisionedThroughput(1L, 1L));
@@ -113,7 +98,7 @@ public class Application {
                 amazonDynamoDB.createTable(tableRequest);
                 log.info("table created");
             } else {
-                log.info("Table BorrowedBooks already exists. skipping creating and insert data part.");
+                log.info("Table Borrowed_Books already exists. skipping creating and insert data part.");
             }
 
         if (!allTables.getTableNames().contains("Librarians")) {
