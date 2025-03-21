@@ -6,11 +6,13 @@ Prerequisite:
 - Need to install node from this page https://nodejs.org/en/download
 - Need to install visual studio code from this page https://code.visualstudio.com/download
 - Need to install postman from this page https://www.postman.com/downloads/
+
 Spring-boot app setup(BE)
 - Use the git client to clone the repo https://github.com/akhan-nmdp/ICS-611-project.git
 - Open project with intelliJ editor
 - Make sure to run dynamoDb outside the IDE then go to application.java file and click run main method option
 - Once the application is running you can hit any of the endpoints to see if data got loaded and your able to hit it postman. An example would be hitting GET http://localhost:8080/books
+  
 Library react app(FE)
 - Open the project with visual studio code
 - Open command line and go to the project diretory and run npm start
