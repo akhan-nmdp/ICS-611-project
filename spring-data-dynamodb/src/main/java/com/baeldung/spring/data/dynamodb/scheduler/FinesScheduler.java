@@ -26,7 +26,7 @@ public class FinesScheduler {
         log.info("start scheduled task- createFinesData");
     Iterable<BorrowedBooks> borrowedBooks = borrowedBooksService.getAll();
     borrowedBooks.forEach(borrowedBook -> {
-        if (LocalDate.parse(borrowedBook.getReturnDate()).compareTo(LocalDate.now()) > 0) {
+        if (LocalDate.now().isAfter(LocalDate.parse(borrowedBook.getReturnDate()))) {
             Fines fineInDb = finesService.get(borrowedBook.getBorrowId());
             if (fineInDb != null) {
                 log.info("fine already exists with fineId: {}", fineInDb.getFineId());
