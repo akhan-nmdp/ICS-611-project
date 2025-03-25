@@ -48,6 +48,34 @@ function Home() {
       >
         View Librarians
       </button>
+      <button
+        onClick={() => navigate("/borrowedBooks")}
+        style={{
+          padding: "10px 20px",
+          fontSize: "16px",
+          cursor: "pointer",
+          background: "blue",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+        }}
+      >
+        View Borrowed Books
+      </button>
+      <button
+        onClick={() => navigate("/fines")}
+        style={{
+          padding: "10px 20px",
+          fontSize: "16px",
+          cursor: "pointer",
+          background: "blue",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+        }}
+      >
+        View Fines
+      </button>
     </div>
   );
 }
