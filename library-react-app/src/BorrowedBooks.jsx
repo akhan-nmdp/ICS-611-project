@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function Books() {
+function BorrowedBooks() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -41,7 +41,7 @@ function Books() {
 
   return (
     <div style={{ maxWidth: "600px", margin: "auto", textAlign: "center" }}>
-      <h1>Book List</h1>
+      <h1>Borrewed Books List</h1>
       <button 
         onClick={() => navigate("/")} 
         style={{ marginBottom: "20px", padding: "8px 15px", cursor: "pointer" }}
@@ -55,8 +55,6 @@ function Books() {
             <th style={tableHeaderStyle}>Title</th>
             <th style={tableHeaderStyle}>Author</th>
             <th style={tableHeaderStyle}>Genre</th>
-            <th style={tableHeaderStyle}>Availability</th>
-            <th style={tableHeaderStyle}>Borrow Books</th>
           </tr>
         </thead>
         <tbody>
@@ -66,40 +64,7 @@ function Books() {
               <td style={tableCellStyle}>{book.title}</td>
               <td style={tableCellStyle}>{book.author}</td>
               <td style={tableCellStyle}>{book.genre}</td>
-              <td style={tableCellStyle}>
-                {book.availability && !isBookBorrowed(book.bookId) ? "✅ Yes" : "❌ No"}
-              </td>
-              <td style={tableCellStyle}>
-              {book.availability ? (
-                <button
-                  onClick={() => handleBorrowBook(book)}
-                  style={{
-                    padding: "5px 10px",
-                    cursor: "pointer",
-                    backgroundColor: isBookBorrowed(book.bookId) ? "#f44336" : "#4CAF50", 
-                    color: "white",
-                    border: "none",
-                    borderRadius: "4px",
-                  }}
-                >
-                  {isBookBorrowed(book.bookId) ? "Borrowed" : "Borrow"}
-                </button>
-              ) : (
-                <button
-                  disabled
-                  style={{
-                    padding: "5px 10px",
-                    cursor: "not-allowed",
-                    backgroundColor: "#ccc",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "4px"
-                  }}
-                >
-                  Borrow
-                </button>
-              )}
-            </td>
+              
             </tr>
           ))}
         </tbody>
@@ -119,4 +84,4 @@ const tableCellStyle = {
   padding: "10px",
 };
 
-export default Books;
+export default BorrowedBooks;

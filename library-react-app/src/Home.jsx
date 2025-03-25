@@ -21,6 +21,20 @@ function Home() {
         View Books
       </button>
       <button
+        onClick={() => navigate("/borrowed-books")}
+        style={{
+          padding: "10px 20px",
+          fontSize: "16px",
+          cursor: "pointer",
+          background: "blue",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+        }}
+      >
+        View Borrowed Books
+      </button>
+      <button
         onClick={() => navigate("/members")}
         style={{
           padding: "10px 20px",
@@ -48,6 +62,7 @@ function Home() {
       >
         View Librarians
       </button>
+
     </div>
   );
 }

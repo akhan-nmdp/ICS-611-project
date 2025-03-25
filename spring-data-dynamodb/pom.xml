@@ -142,6 +142,11 @@
             <version>1.14.13</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-dynamodb</artifactId>
+            <version>1.11.64</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -165,6 +170,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 
@@ -179,6 +185,10 @@
         <dynamodblocal.version>1.25.0</dynamodblocal.version>
         <maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>
         <url-connection-client.version>2.25.45</url-connection-client.version>
+        <maven.compiler.source>23</maven.compiler.source>
+        <maven.compiler.target>23</maven.compiler.target>
     </properties>
+
+
 
 </project>
