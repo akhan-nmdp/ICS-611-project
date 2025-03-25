@@ -24,9 +24,24 @@ function BorrowedBooks() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
+
+  const handleBorrowBook = (book) => {
+    if (borrowedBooks.includes(book.bookId)) {
+      setBorrowedBooks(prevState => prevState.filter(id => id !== book.bookId));
+    } else {
+      setBorrowedBooks(prevState => [...prevState, book.bookId]);
+    }
+  };
+  
+
+  const isBookBorrowed = (bookId) => {
+    return borrowedBooks.includes(bookId);
+  };
+
   return (
     <div style={{ maxWidth: "600px", margin: "auto", textAlign: "center" }}>
-      <h1>Book List</h1>
+      <h1>Borrewed Books List</h1>
+
       <button 
         onClick={() => navigate("/")} 
         style={{ marginBottom: "20px", padding: "8px 15px", cursor: "pointer" }}
@@ -40,7 +55,6 @@ function BorrowedBooks() {
             <th style={tableHeaderStyle}>Title</th>
             <th style={tableHeaderStyle}>Author</th>
             <th style={tableHeaderStyle}>Genre</th>
-            <th style={tableHeaderStyle}>Availability</th>
           </tr>
         </thead>
         <tbody>
@@ -50,9 +64,7 @@ function BorrowedBooks() {
               <td style={tableCellStyle}>{book.title}</td>
               <td style={tableCellStyle}>{book.author}</td>
               <td style={tableCellStyle}>{book.genre}</td>
-              <td style={tableCellStyle}>
-                {book.availability ? "✅ Yes" : "❌ No"}
-              </td>
+    
             </tr>
           ))}
         </tbody>
@@ -72,4 +84,5 @@ const tableCellStyle = {
   padding: "10px",
 };
 
-export default Books;
+export default BorrowedBooks;
+

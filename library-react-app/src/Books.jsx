@@ -7,6 +7,8 @@ function Books() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const [borrowedBooks, setBorrowedBooks] = useState([]);
+
 
   useEffect(() => {
     // Fetch data from API
@@ -23,6 +25,19 @@ function Books() {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
+
+  const handleBorrowBook = (book) => {
+    if (borrowedBooks.includes(book.bookId)) {
+      setBorrowedBooks(prevState => prevState.filter(id => id !== book.bookId));
+    } else {
+      setBorrowedBooks(prevState => [...prevState, book.bookId]);
+    }
+  };
+  
+
+  const isBookBorrowed = (bookId) => {
+    return borrowedBooks.includes(bookId);
+  };
 
   return (
     <div style={{ maxWidth: "600px", margin: "auto", textAlign: "center" }}>
@@ -41,6 +56,7 @@ function Books() {
             <th style={tableHeaderStyle}>Author</th>
             <th style={tableHeaderStyle}>Genre</th>
             <th style={tableHeaderStyle}>Availability</th>
+            <th style={tableHeaderStyle}>Borrow Books</th>
           </tr>
         </thead>
         <tbody>
@@ -51,8 +67,39 @@ function Books() {
               <td style={tableCellStyle}>{book.author}</td>
               <td style={tableCellStyle}>{book.genre}</td>
               <td style={tableCellStyle}>
-                {book.availability ? "✅ Yes" : "❌ No"}
+                {book.availability && !isBookBorrowed(book.bookId) ? "✅ Yes" : "❌ No"}
               </td>
+              <td style={tableCellStyle}>
+              {book.availability ? (
+                <button
+                  onClick={() => handleBorrowBook(book)}
+                  style={{
+                    padding: "5px 10px",
+                    cursor: "pointer",
+                    backgroundColor: isBookBorrowed(book.bookId) ? "#f44336" : "#4CAF50", 
+                    color: "white",
+                    border: "none",
+                    borderRadius: "4px",
+                  }}
+                >
+                  {isBookBorrowed(book.bookId) ? "Borrowed" : "Borrow"}
+                </button>
+              ) : (
+                <button
+                  disabled
+                  style={{
+                    padding: "5px 10px",
+                    cursor: "not-allowed",
+                    backgroundColor: "#ccc",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "4px"
+                  }}
+                >
+                  Borrow
+                </button>
+              )}
+            </td>
             </tr>
           ))}
         </tbody>
