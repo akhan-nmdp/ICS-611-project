@@ -5,6 +5,7 @@ public class BookReservation {
     private String memberId;
     private String bookId;
     private String borrowDate;
+    private String returnDate;
 
     public String getMemberId() {
         return memberId;
@@ -28,5 +29,13 @@ public class BookReservation {
 
     public void setBorrowDate(String borrowDate) {
         this.borrowDate = borrowDate;
+    }
+
+    public String getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(String returnDate) {
+        this.returnDate = returnDate;
     }
 }
