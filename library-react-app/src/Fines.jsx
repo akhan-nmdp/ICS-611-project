@@ -2,17 +2,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function BorrowedBooks() {
-  const [books, setBooks] = useState([]);
+function Fines() {
+  const [fines, setFines] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch data from API
-    axios.get("http://localhost:8080/borrowedbooks")
+    axios.get("http://localhost:8080/fines")
       .then(response => {
-        setBooks(response.data);
+        setFines(response.data);
         setLoading(false);
       })
       .catch(error => {
@@ -24,24 +24,9 @@ function BorrowedBooks() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-
-  const handleBorrowBook = (book) => {
-    if (borrowedBooks.includes(book.bookId)) {
-      setBorrowedBooks(prevState => prevState.filter(id => id !== book.bookId));
-    } else {
-      setBorrowedBooks(prevState => [...prevState, book.bookId]);
-    }
-  };
-  
-
-  const isBookBorrowed = (bookId) => {
-    return borrowedBooks.includes(bookId);
-  };
-
   return (
     <div style={{ maxWidth: "600px", margin: "auto", textAlign: "center" }}>
-      <h1>Borrewed Books List</h1>
-
+      <h1>Fines List</h1>
       <button 
         onClick={() => navigate("/")} 
         style={{ marginBottom: "20px", padding: "8px 15px", cursor: "pointer" }}
@@ -51,20 +36,23 @@ function BorrowedBooks() {
       <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "20px" }}>
         <thead>
           <tr style={{ background: "#ddd" }}>
-            <th style={tableHeaderStyle}>ISBN</th>
-            <th style={tableHeaderStyle}>Title</th>
-            <th style={tableHeaderStyle}>Author</th>
-            <th style={tableHeaderStyle}>Genre</th>
+            <th style={tableHeaderStyle}>MemberId</th>
+            <th style={tableHeaderStyle}>BorrowId</th>
+            <th style={tableHeaderStyle}>FineAmount</th>
+            <th style={tableHeaderStyle}>IssueDate</th>
+            <th style={tableHeaderStyle}>Paid</th>
           </tr>
         </thead>
         <tbody>
-          {books.map(book => (
-            <tr key={book.bookId}>
-              <td style={tableCellStyle}>{book.isbn}</td>
-              <td style={tableCellStyle}>{book.title}</td>
-              <td style={tableCellStyle}>{book.author}</td>
-              <td style={tableCellStyle}>{book.genre}</td>
-    
+          {fines.map(fine => (
+            <tr key={fine.fineId}>
+              <td style={tableCellStyle}>{fine.memberId}</td>
+              <td style={tableCellStyle}>{fine.borrowId}</td>
+              <td style={tableCellStyle}>{fine.fineAmount}</td>
+              <td style={tableCellStyle}>{fine.issueDate}</td>
+              <td style={tableCellStyle}>
+                {fine.paid ? "✅ Yes" : "❌ No"}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -84,5 +72,4 @@ const tableCellStyle = {
   padding: "10px",
 };
 
-export default BorrowedBooks;
-
+export default Fines;
