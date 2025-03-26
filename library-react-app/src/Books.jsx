@@ -4,17 +4,32 @@ import { useNavigate } from "react-router-dom";
 
 function Books() {
   const [books, setBooks] = useState([]);
+  const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const [borrowedBooks, setBorrowedBooks] = useState([]);
-
+  const [selectedBook, setSelectedBook] = useState(null); // Store the selected book for borrowing
+  const [selectedMember, setSelectedMember] = useState(""); 
+  const [modalVisible, setModalVisible] = useState(false); 
 
   useEffect(() => {
-    // Fetch data from API
+    // Fetch data from API for books
     axios.get("http://localhost:8080/books")
       .then(response => {
         setBooks(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        setError(error);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    // Fetch data from API for members
+    axios.get("http://localhost:8080/members")
+      .then(response => {
+        setMembers(response.data);
         setLoading(false);
       })
       .catch(error => {
@@ -27,16 +42,32 @@ function Books() {
   if (error) return <p>Error: {error.message}</p>;
 
   const handleBorrowBook = (book) => {
-    if (borrowedBooks.includes(book.bookId)) {
-      setBorrowedBooks(prevState => prevState.filter(id => id !== book.bookId));
-    } else {
-      setBorrowedBooks(prevState => [...prevState, book.bookId]);
-    }
+    // Set the selected book and show the modal
+    setSelectedBook(book);
+    setModalVisible(true);
   };
-  
 
-  const isBookBorrowed = (bookId) => {
-    return borrowedBooks.includes(bookId);
+  const closeModal = () => {
+    setModalVisible(false); // Close the modal
+    setSelectedBook(null); // Reset the selected book
+    setSelectedMember(""); // Reset the selected member
+  };
+
+  const handleModalSubmit = () => {
+    if (selectedMember && selectedBook) {
+      // Update availability of borrowed books
+      const updatedBooks = books.map(book => 
+        book.bookId === selectedBook.bookId ? { ...book, availability: false } : book
+      );
+      setBooks(updatedBooks); // Update the books state with the new availability status
+
+      // Log borrowed book info
+      console.log(`Book Borrowed by: ${selectedMember}`);
+      console.log(`Book ID: ${selectedBook.bookId}, Borrowed by: ${selectedMember}`);
+
+      // Close the modal and reset the form
+      closeModal();
+    }
   };
 
   return (
@@ -46,8 +77,8 @@ function Books() {
         onClick={() => navigate("/")} 
         style={{ marginBottom: "20px", padding: "8px 15px", cursor: "pointer" }}
       >
-                Go Back
-                </button>
+        Go Back
+      </button>
       <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "20px" }}>
         <thead>
           <tr style={{ background: "#ddd" }}>
@@ -56,54 +87,111 @@ function Books() {
             <th style={tableHeaderStyle}>Author</th>
             <th style={tableHeaderStyle}>Genre</th>
             <th style={tableHeaderStyle}>Availability</th>
-            <th style={tableHeaderStyle}>Borrow Books</th>
+            <th style={tableHeaderStyle}>Borrow</th>
           </tr>
         </thead>
         <tbody>
-          {books.map(book => (
+          {books.map((book) => (
             <tr key={book.bookId}>
               <td style={tableCellStyle}>{book.isbn}</td>
               <td style={tableCellStyle}>{book.title}</td>
               <td style={tableCellStyle}>{book.author}</td>
               <td style={tableCellStyle}>{book.genre}</td>
               <td style={tableCellStyle}>
-                {book.availability && !isBookBorrowed(book.bookId) ? "✅ Yes" : "❌ No"}
+                {book.availability ? "✅ Yes" : "❌ No"}
               </td>
               <td style={tableCellStyle}>
-              {book.availability ? (
-                <button
-                  onClick={() => handleBorrowBook(book)}
-                  style={{
-                    padding: "5px 10px",
-                    cursor: "pointer",
-                    backgroundColor: isBookBorrowed(book.bookId) ? "#f44336" : "#4CAF50", 
-                    color: "white",
-                    border: "none",
-                    borderRadius: "4px",
-                  }}
-                >
-                  {isBookBorrowed(book.bookId) ? "Borrowed" : "Borrow"}
-                </button>
-              ) : (
-                <button
-                  disabled
-                  style={{
-                    padding: "5px 10px",
-                    cursor: "not-allowed",
-                    backgroundColor: "#ccc",
-                    color: "white",
-                    border: "none",
-                    borderRadius: "4px"
-                  }}
-                >
-                  Borrow
-                </button>
-              )}
-            </td>
+                {book.availability ? (
+                  <button
+                    onClick={() => handleBorrowBook(book)}
+                    style={{
+                      padding: "5px 10px",
+                      cursor: "pointer",
+                      backgroundColor: "#4CAF50",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "4px",
+                    }}
+                  >
+                    Borrow
+                  </button>
+                ) : (
+                  <button
+                    disabled
+                    style={{
+                      padding: "5px 10px",
+                      cursor: "not-allowed",
+                      backgroundColor: "#ccc",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "4px"
+                    }}
+                  >
+                    Borrow
+                  </button>
+                )}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {/* Modal for borrowing a book */}
+      {modalVisible && selectedBook && (
+        <div style={modalOverlayStyle}>
+          <div style={modalContentStyle}>
+            <h2>Select Member</h2>
+            <select
+              value={selectedMember}
+              onChange={(e) => setSelectedMember(e.target.value)}
+              style={{
+                padding: "5px",
+                cursor: "pointer",
+                width: "100%",
+                borderRadius: "4px",
+              }}
+            >
+              <option value="">Select Member</option>
+              {members.map((member) => (
+                <option key={member.id} value={member.name}>
+                  {member.name}
+                </option>
+              ))}
+            </select>
+            <h3>Selected Book</h3>
+            <p>{selectedBook.title}</p>
+            <div style={{ marginTop: "10px" }}>
+              <button
+                onClick={handleModalSubmit}
+                style={{
+                  padding: "5px 10px",
+                  cursor: "pointer",
+                  backgroundColor: "#4CAF50",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                }}
+              >
+                Confirm Borrow
+              </button>
+              <button
+                onClick={closeModal}
+                style={{
+                  padding: "5px 10px",
+                  cursor: "pointer",
+                  backgroundColor: "#f44336",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  marginLeft: "10px"
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -117,6 +205,26 @@ const tableHeaderStyle = {
 const tableCellStyle = {
   border: "1px solid black",
   padding: "10px",
+};
+
+const modalOverlayStyle = {
+  position: "fixed",
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: "100%",
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+
+const modalContentStyle = {
+  backgroundColor: "white",
+  padding: "20px",
+  borderRadius: "8px",
+  minWidth: "300px",
+  textAlign: "center",
 };
 
 export default Books;
