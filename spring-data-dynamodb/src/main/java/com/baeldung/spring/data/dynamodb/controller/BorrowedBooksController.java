@@ -2,6 +2,7 @@ package com.baeldung.spring.data.dynamodb.controller;
 
 import com.baeldung.spring.data.dynamodb.model.BorrowedBooks;
 import com.baeldung.spring.data.dynamodb.request.dto.BookReservation;
+import com.baeldung.spring.data.dynamodb.service.BookService;
 import com.baeldung.spring.data.dynamodb.service.BorrowedBooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 public class BorrowedBooksController {
     @Autowired
     BorrowedBooksService borrowedBooksService;
+    @Autowired
+    BookService bookService;
 
     @GetMapping("/borrowed-books")
     public ResponseEntity<Iterable<BorrowedBooks>> getAll() {
@@ -24,6 +27,7 @@ public class BorrowedBooksController {
     @PostMapping("/borrowed-books")
     public ResponseEntity<Void> reserve(@RequestBody BookReservation bookReservation) {
         borrowedBooksService.reserve(bookReservation);
+        bookService.updateAvailability(bookReservation.getBookId(), false);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

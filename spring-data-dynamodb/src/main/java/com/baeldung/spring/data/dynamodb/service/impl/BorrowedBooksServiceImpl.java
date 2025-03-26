@@ -39,7 +39,7 @@ public class BorrowedBooksServiceImpl implements BorrowedBooksService {
         borrowedBooks.setBookId(bookReservation.getBookId());
         borrowedBooks.setMemberId(bookReservation.getMemberId());
         borrowedBooks.setBorrowDate(bookReservation.getBorrowDate());
-        borrowedBooks.setReturnDate(borrowedBooks.getReturnDate());
+        borrowedBooks.setReturnDate(bookReservation.getReturnDate());
         borrowedBooksRepository.save(borrowedBooks);
     }
 }
