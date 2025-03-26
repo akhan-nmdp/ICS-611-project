@@ -55,18 +55,41 @@ function Books() {
 
   const handleModalSubmit = () => {
     if (selectedMember && selectedBook) {
-      // Update availability of borrowed books
-      const updatedBooks = books.map(book => 
-        book.bookId === selectedBook.bookId ? { ...book, availability: false } : book
-      );
-      setBooks(updatedBooks); // Update the books state with the new availability status
+      const borrowDate = new Date();
+      const returnDate = new Date(borrowDate);
+      returnDate.setDate(borrowDate.getDate() + 14); // Set return date to two weeks from borrow date
 
-      // Log borrowed book info
-      console.log(`Book Borrowed by: ${selectedMember}`);
-      console.log(`Book ID: ${selectedBook.bookId}, Borrowed by: ${selectedMember}`);
+      // Format dates as strings (e.g., "YYYY-MM-DD")
+      const formattedBorrowDate = borrowDate.toISOString().split('T')[0];
+      const formattedReturnDate = returnDate.toISOString().split('T')[0];
 
-      // Close the modal and reset the form
-      closeModal();
+      // Prepare the data to be sent to the borrowedBooks table
+      const borrowedBookData = {
+        memberId: selectedMember,
+        bookId: selectedBook.title,
+        borrowDate: formattedBorrowDate,
+        returnDate: formattedReturnDate,
+      };
+
+      // Call the API to save the borrowed book information
+      axios.post("http://localhost:8080/borrowed-books", borrowedBookData)
+        .then(response => {
+          console.log("Book borrowed successfully:", response.data);
+          
+          // Update availability of borrowed books in the state
+          const updatedBooks = books.map(book => 
+            book.bookId === selectedBook.bookId ? { ...book, availability: false } : book
+          );
+          setBooks(updatedBooks); // Update the books state with the new availability status
+
+          console.log(updatedBooks)
+          console.log(borrowedBookData)
+          // Close the modal and reset the form
+          closeModal();
+        })
+        .catch(error => {
+          console.error("Error borrowing book:", error);
+        });
     }
   };
 
