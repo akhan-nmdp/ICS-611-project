@@ -3,16 +3,16 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function BorrowedBooks() {
-  const [books, setBooks] = useState([]);
+  const [borrowedBooks, setBorrowedBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch data from API
-    axios.get("http://localhost:8080/borrowedbooks")
+    axios.get("http://localhost:8080/borrowed-books")
       .then(response => {
-        setBooks(response.data);
+        setBorrowedBooks(response.data);
         setLoading(false);
       })
       .catch(error => {
@@ -23,20 +23,6 @@ function BorrowedBooks() {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
-
-
-  const handleBorrowBook = (book) => {
-    if (borrowedBooks.includes(book.bookId)) {
-      setBorrowedBooks(prevState => prevState.filter(id => id !== book.bookId));
-    } else {
-      setBorrowedBooks(prevState => [...prevState, book.bookId]);
-    }
-  };
-  
-
-  const isBookBorrowed = (bookId) => {
-    return borrowedBooks.includes(bookId);
-  };
 
   return (
     <div style={{ maxWidth: "600px", margin: "auto", textAlign: "center" }}>
@@ -51,19 +37,19 @@ function BorrowedBooks() {
       <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "20px" }}>
         <thead>
           <tr style={{ background: "#ddd" }}>
-            <th style={tableHeaderStyle}>ISBN</th>
-            <th style={tableHeaderStyle}>Title</th>
-            <th style={tableHeaderStyle}>Author</th>
-            <th style={tableHeaderStyle}>Genre</th>
+            <th style={tableHeaderStyle}>MemberID</th>
+            <th style={tableHeaderStyle}>BookID</th>
+            <th style={tableHeaderStyle}>BorrowDate</th>
+            <th style={tableHeaderStyle}>ReturnDate</th>
           </tr>
         </thead>
         <tbody>
-          {books.map(book => (
-            <tr key={book.bookId}>
-              <td style={tableCellStyle}>{book.isbn}</td>
-              <td style={tableCellStyle}>{book.title}</td>
-              <td style={tableCellStyle}>{book.author}</td>
-              <td style={tableCellStyle}>{book.genre}</td>
+          {borrowedBooks.map(book => (
+            <tr key={book.borrowId}>
+              <td style={tableCellStyle}>{book.memberId}</td>
+              <td style={tableCellStyle}>{book.bookId}</td>
+              <td style={tableCellStyle}>{book.borrowDate}</td>
+              <td style={tableCellStyle}>{book.returnDate}</td>
     
             </tr>
           ))}
