@@ -51,8 +51,8 @@ function BorrowedBooks() {
                 <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "20px" }}>
         <thead>
           <tr style={{ background: "#ddd" }}>
-            <th style={tableHeaderStyle}>MemberId</th>
-            <th style={tableHeaderStyle}>BookId</th>
+            <th style={tableHeaderStyle}>Member Name</th>
+            <th style={tableHeaderStyle}>Book Name</th>
             <th style={tableHeaderStyle}>BorrowDate</th>
             <th style={tableHeaderStyle}>ReturnDate</th>
           </tr>
@@ -60,8 +60,8 @@ function BorrowedBooks() {
         <tbody>
           {borrowedBooks.map(borrowedBook => (
             <tr key={borrowedBook.borrowId}>
-              <td style={tableCellStyle}>{borrowedBook.memberId}</td>
-              <td style={tableCellStyle}>{borrowedBook.bookId}</td>
+              <td style={tableCellStyle}>{borrowedBook.memberName}</td>
+              <td style={tableCellStyle}>{borrowedBook.bookName}</td>
               <td style={tableCellStyle}>{borrowedBook.borrowDate}</td>
               <td style={tableCellStyle}>{borrowedBook.returnDate}</td>
             </tr>
