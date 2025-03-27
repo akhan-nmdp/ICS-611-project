@@ -65,8 +65,9 @@ function Books() {
 
       // Prepare the data to be sent to the borrowedBooks table
       const borrowedBookData = {
-        memberId: selectedMember,
-        bookId: selectedBook.title,
+        memberId: null,
+        memberName: selectedMember,
+        bookId: selectedBook.bookId,
         borrowDate: formattedBorrowDate,
         returnDate: formattedReturnDate,
       };
