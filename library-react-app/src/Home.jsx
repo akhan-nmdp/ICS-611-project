@@ -62,6 +62,10 @@ function Home() {
       >
         View Librarians
       </button>
+<<<<<<< HEAD
+=======
+
+>>>>>>> borrow_feature
       <button
         onClick={() => navigate("/fines")}
         style={{

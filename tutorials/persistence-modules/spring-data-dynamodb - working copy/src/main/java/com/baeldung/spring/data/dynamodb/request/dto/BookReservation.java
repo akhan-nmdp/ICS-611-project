@@ -3,6 +3,7 @@ package com.baeldung.spring.data.dynamodb.request.dto;
 public class BookReservation {
 
     private String memberId;
+    private String memberName;
     private String bookId;
     private String borrowDate;
     private String returnDate;
@@ -37,5 +38,13 @@ public class BookReservation {
 
     public void setReturnDate(String returnDate) {
         this.returnDate = returnDate;
+    }
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
     }
 }
