@@ -9,4 +9,6 @@ import java.util.Optional;
 
 @EnableScan
 public interface MembersRepository extends CrudRepository<Members, String> {
+
+    Members findByName(String name);
 }

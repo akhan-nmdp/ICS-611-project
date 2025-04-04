@@ -24,7 +24,7 @@ public class FinesScheduler {
     @Scheduled(fixedRate = 10000)
     public void createFinesData() {
         log.info("start scheduled task- createFinesData");
-    Iterable<BorrowedBooks> borrowedBooks = borrowedBooksService.getAll();
+    Iterable<BorrowedBooks> borrowedBooks = borrowedBooksService.findAll();
     borrowedBooks.forEach(borrowedBook -> {
         if (LocalDate.now().isAfter(LocalDate.parse(borrowedBook.getReturnDate()))) {
             Fines fineInDb = finesService.get(borrowedBook.getBorrowId());
