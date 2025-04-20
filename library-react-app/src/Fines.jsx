@@ -36,8 +36,8 @@ function Fines() {
       <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "20px" }}>
         <thead>
           <tr style={{ background: "#ddd" }}>
-            <th style={tableHeaderStyle}>MemberId</th>
-            <th style={tableHeaderStyle}>BorrowId</th>
+            <th style={tableHeaderStyle}>Member Name</th>
+            <th style={tableHeaderStyle}>Book Name</th>
             <th style={tableHeaderStyle}>FineAmount</th>
             <th style={tableHeaderStyle}>IssueDate</th>
             <th style={tableHeaderStyle}>Paid</th>
@@ -46,8 +46,8 @@ function Fines() {
         <tbody>
           {fines.map(fine => (
             <tr key={fine.fineId}>
-              <td style={tableCellStyle}>{fine.memberId}</td>
-              <td style={tableCellStyle}>{fine.borrowId}</td>
+              <td style={tableCellStyle}>{fine.memberName}</td>
+              <td style={tableCellStyle}>{fine.bookName}</td>
               <td style={tableCellStyle}>{fine.fineAmount}</td>
               <td style={tableCellStyle}>{fine.issueDate}</td>
               <td style={tableCellStyle}>

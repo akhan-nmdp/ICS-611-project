@@ -7,10 +7,12 @@ Prerequisite:
 - Need to install visual studio code from this page https://code.visualstudio.com/download
 - Need to install postman from this page https://www.postman.com/downloads/
 
-Spring-boot app setup(BE)
+Tutorials app setup(BE)
 - Use the git client to clone the repo https://github.com/akhan-nmdp/ICS-611-project.git
-- Open project with intelliJ editor
-- Make sure to run dynamoDb outside the IDE then go to application.java file and click run main method option
+- Open tutorials project with intelliJ editor
+- Run maven clean install configuration at tutotials level
+- Drill down into persistence-modules/spring-data-dynamodb and run maven clean install configuration
+- Make sure to run dynamoDb outside the IDE then go to Application.java file and click run main method option
 - Once the application is running you can hit any of the endpoints to see if data got loaded and your able to hit it postman. An example would be hitting GET http://localhost:8080/books
   
 Library react app(FE)

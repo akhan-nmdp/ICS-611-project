@@ -4,6 +4,7 @@ import Books from "./Books";
 import BorrowedBooks from "./BorrowedBooks";
 import Members from "./Members";
 import Librarians from "./Librarians";
+import Fines from "./Fines";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/borrowed-books" element={<BorrowedBooks />} />
         <Route path="/members" element={<Members />} />
         <Route path="/librarians" element={<Librarians />} />
+        <Route path="/fines" element={<Fines />} />
       </Routes>
     </Router>
   );
