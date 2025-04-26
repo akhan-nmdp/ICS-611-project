@@ -17,6 +17,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests().antMatchers(HttpMethod.GET,"/*").permitAll()
                 .antMatchers(HttpMethod.POST, "/*").permitAll()
+                .antMatchers(HttpMethod.PUT, "/*/*").permitAll()
                 .anyRequest().authenticated();
         return http.build();
     }

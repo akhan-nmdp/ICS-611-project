@@ -29,4 +29,10 @@ public class BorrowedBooksController {
         borrowedBooksService.reserve(bookReservation);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @PutMapping("/borrowed-books/return")
+    public ResponseEntity<Void> returnBook(@RequestParam String borrowId) {
+        borrowedBooksService.returnBook(borrowId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }
