@@ -55,6 +55,7 @@ function BorrowedBooks() {
             <th style={tableHeaderStyle}>Book Name</th>
             <th style={tableHeaderStyle}>BorrowDate</th>
             <th style={tableHeaderStyle}>ReturnDate</th>
+            <th style={tableHeaderStyle}>BorrowStatus</th>
           </tr>
         </thead>
         <tbody>
@@ -64,6 +65,7 @@ function BorrowedBooks() {
               <td style={tableCellStyle}>{borrowedBook.bookName}</td>
               <td style={tableCellStyle}>{borrowedBook.borrowDate}</td>
               <td style={tableCellStyle}>{borrowedBook.returnDate}</td>
+              <td style={tableCellStyle}>{borrowedBook.borrowStatus}</td>
             </tr>
           ))}
         </tbody>

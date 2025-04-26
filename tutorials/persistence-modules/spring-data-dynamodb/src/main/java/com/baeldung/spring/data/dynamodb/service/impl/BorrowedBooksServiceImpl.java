@@ -48,6 +48,7 @@ public class BorrowedBooksServiceImpl implements BorrowedBooksService {
                 membersRepository.findById(borrowedBook.getMemberId()).ifPresent(member -> borrowedBooksDto.setMemberName(member.getName()));
                 borrowedBooksDto.setBorrowDate(borrowedBook.getBorrowDate());
                 borrowedBooksDto.setReturnDate(borrowedBook.getReturnDate());
+                borrowedBooksDto.setBorrowStatus(borrowedBook.getBorrowStatus());
                 borrowedBooksDtoList.add(borrowedBooksDto);
             }
         }

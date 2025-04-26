@@ -7,6 +7,7 @@ public class BorrowedBooksDto {
     private String bookName;
     private String borrowDate;
     private String returnDate;
+    private String borrowStatus;
 
     public String getBorrowId() {
         return borrowId;
@@ -46,5 +47,13 @@ public class BorrowedBooksDto {
 
     public void setReturnDate(String returnDate) {
         this.returnDate = returnDate;
+    }
+
+    public String getBorrowStatus() {
+        return borrowStatus;
+    }
+
+    public void setBorrowStatus(String borrowStatus) {
+        this.borrowStatus = borrowStatus;
     }
 }
