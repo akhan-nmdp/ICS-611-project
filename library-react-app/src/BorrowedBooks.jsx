@@ -14,6 +14,7 @@ function BorrowedBooks() {
         .then(response => {
           setBorrowedBooks(response.data);
           setLoading(false);
+          console.log(response.data);
         })
         .catch(error => {
           setError(error);
@@ -56,6 +57,7 @@ function BorrowedBooks() {
             <th style={tableHeaderStyle}>BorrowDate</th>
             <th style={tableHeaderStyle}>ReturnDate</th>
             <th style={tableHeaderStyle}>BorrowStatus</th>
+            <th style={tableHeaderStyle}>Return Book</th>
           </tr>
         </thead>
         <tbody>
@@ -66,6 +68,37 @@ function BorrowedBooks() {
               <td style={tableCellStyle}>{borrowedBook.borrowDate}</td>
               <td style={tableCellStyle}>{borrowedBook.returnDate}</td>
               <td style={tableCellStyle}>{borrowedBook.borrowStatus}</td>
+              <td style={tableCellStyle}>
+              {borrowedBook ? (
+                  <button
+                    onClick={() => console.log("Return Book: ", borrowedBook.bookId)}
+                    style={{
+                      padding: "5px 10px",
+                      cursor: "pointer",
+                      backgroundColor: "#4CAF50",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "4px",
+                    }}
+                  >
+                    Return
+                  </button>
+                ) : (
+                  <button
+                    disabled
+                    style={{
+                      padding: "5px 10px",
+                      cursor: "not-allowed",
+                      backgroundColor: "#ccc",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "4px"
+                    }}
+                  >
+                    Returned
+                  </button>
+                )}
+              </td>
             </tr>
           ))}
         </tbody>
