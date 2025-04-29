@@ -38,8 +38,8 @@ function Fines() {
           <tr style={{ background: "#ddd" }}>
             <th style={tableHeaderStyle}>Member Name</th>
             <th style={tableHeaderStyle}>Book Name</th>
-            <th style={tableHeaderStyle}>FineAmount</th>
-            <th style={tableHeaderStyle}>IssueDate</th>
+            <th style={tableHeaderStyle}>Fine Amount</th>
+            <th style={tableHeaderStyle}>Issue Date</th>
             <th style={tableHeaderStyle}>Paid</th>
           </tr>
         </thead>

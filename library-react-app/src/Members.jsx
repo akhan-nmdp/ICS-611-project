@@ -38,7 +38,7 @@ return (
           <tr style={{ background: "#ddd" }}>
             <th style={tableHeaderStyle}>Name</th>
             <th style={tableHeaderStyle}>Email</th>
-            <th style={tableHeaderStyle}>MembershipDate</th>
+            <th style={tableHeaderStyle}>Membership Start Date</th>
           </tr>
         </thead>
         <tbody>
