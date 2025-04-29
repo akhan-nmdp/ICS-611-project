@@ -14,6 +14,7 @@ function BorrowedBooks() {
         .then(response => {
           setBorrowedBooks(response.data);
           setLoading(false);
+          console.log(response.data);
         })
         .catch(error => {
           setError(error);
