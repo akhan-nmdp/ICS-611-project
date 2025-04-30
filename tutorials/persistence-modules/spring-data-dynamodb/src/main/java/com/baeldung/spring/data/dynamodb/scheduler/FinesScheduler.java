@@ -21,7 +21,7 @@ public class FinesScheduler {
     @Autowired
     FinesService finesService;
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 60000)
     public void createFinesData() {
         log.info("start scheduled task- createFinesData");
     Iterable<BorrowedBooks> borrowedBooks = borrowedBooksService.findAll();

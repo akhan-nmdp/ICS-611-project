@@ -13,6 +13,11 @@ public class BorrowedBooks {
     private String bookId;
     private String borrowDate;
     private String returnDate;
+    private String borrowStatus;
+
+    public enum BorrowStatus {
+        BORROWED,RETURNED, LATE;
+    }
 
     public BorrowedBooks() {
     }
@@ -68,5 +73,14 @@ public class BorrowedBooks {
 
     public void setReturnDate(String returnDate) {
         this.returnDate = returnDate;
+    }
+
+    @DynamoDBAttribute
+    public String getBorrowStatus() {
+        return borrowStatus;
+    }
+
+    public void setBorrowStatus(String borrowStatus) {
+        this.borrowStatus = borrowStatus;
     }
 }

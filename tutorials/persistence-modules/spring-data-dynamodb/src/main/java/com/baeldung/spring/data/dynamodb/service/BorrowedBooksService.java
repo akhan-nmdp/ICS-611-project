@@ -12,4 +12,6 @@ public interface BorrowedBooksService {
     Iterable<BorrowedBooks> findAll();
     BorrowedBooks get(String id);
     void reserve(BookReservation bookReservation);
+    void returnBook(String borrowId);
+    void save(BorrowedBooks borrowedBooks);
 }

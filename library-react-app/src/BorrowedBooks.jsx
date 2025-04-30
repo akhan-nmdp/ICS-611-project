@@ -14,6 +14,7 @@ function BorrowedBooks() {
         .then(response => {
           setBorrowedBooks(response.data);
           setLoading(false);
+          console.log(response.data);
         })
         .catch(error => {
           setError(error);
@@ -24,19 +25,18 @@ function BorrowedBooks() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
-
-//   const handleBorrowBook = (book) => {
-//     if (borrowedBooks.includes(book.bookId)) {
-//       setBorrowedBooks(prevState => prevState.filter(id => id !== book.bookId));
-//     } else {
-//       setBorrowedBooks(prevState => [...prevState, book.bookId]);
-//     }
-//   };
+  const handleReturnBook = async (borrowId) => {
+    try {
+      await axios.put(`http://localhost:8080/borrowed-books/return/${borrowId}`);
+      // After successful return, refetch the updated list
+      const response = await axios.get("http://localhost:8080/borrowed-books");
+      setBorrowedBooks(response.data);
   
-
-//   const isBookBorrowed = (bookId) => {
-//     return borrowedBooks.includes(bookId);
-//   };
+    } catch (error) {
+      console.error("Failed to return book:", error);
+      alert("Error returning the book. Please try again.");
+    }
+  }; 
 
   return (
     <div style={{ maxWidth: "600px", margin: "auto", textAlign: "center" }}>
@@ -53,20 +53,40 @@ function BorrowedBooks() {
           <tr style={{ background: "#ddd" }}>
             <th style={tableHeaderStyle}>Member Name</th>
             <th style={tableHeaderStyle}>Book Name</th>
-            <th style={tableHeaderStyle}>BorrowDate</th>
-            <th style={tableHeaderStyle}>ReturnDate</th>
+            <th style={tableHeaderStyle}>Borrow Date</th>
+            <th style={tableHeaderStyle}>Return Date</th>
+            <th style={tableHeaderStyle}>Borrow Status</th>
           </tr>
         </thead>
         <tbody>
-          {borrowedBooks.map(borrowedBook => (
-            <tr key={borrowedBook.borrowId}>
-              <td style={tableCellStyle}>{borrowedBook.memberName}</td>
-              <td style={tableCellStyle}>{borrowedBook.bookName}</td>
-              <td style={tableCellStyle}>{borrowedBook.borrowDate}</td>
-              <td style={tableCellStyle}>{borrowedBook.returnDate}</td>
-            </tr>
-          ))}
-        </tbody>
+  {borrowedBooks.map(borrowedBook => (
+    <tr key={borrowedBook.borrowId}>
+      <td style={tableCellStyle}>{borrowedBook.memberName}</td>
+      <td style={tableCellStyle}>{borrowedBook.bookName}</td>
+      <td style={tableCellStyle}>{borrowedBook.borrowDate}</td>
+      <td style={tableCellStyle}>{borrowedBook.returnDate}</td>
+      <td style={tableCellStyle}>
+        {borrowedBook.borrowStatus}
+        {borrowedBook.borrowStatus === 'BORROWED' && (
+          <button 
+            onClick={() => handleReturnBook(borrowedBook.borrowId)}
+            style={{
+              marginLeft: "10px",
+              padding: "5px 10px",
+              cursor: "pointer",
+              backgroundColor: "#28a745",
+              color: "white",
+              border: "none",
+              borderRadius: "5px"
+            }}
+          >
+            Return
+          </button>
+        )}
+      </td>
+    </tr>
+  ))}
+</tbody>
       </table>
     </div>
   );

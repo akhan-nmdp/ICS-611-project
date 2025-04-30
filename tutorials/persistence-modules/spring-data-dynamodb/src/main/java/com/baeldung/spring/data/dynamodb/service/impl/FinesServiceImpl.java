@@ -37,6 +37,9 @@ public class FinesServiceImpl implements FinesService {
        fine.setFineAmount(1);
        fine.setPaid(false);
        fine.setIssueDate(LocalDate.now().toString());
+       BorrowedBooks borrowedBook = borrowedBooksService.get(fine.getBorrowId());
+       borrowedBook.setBorrowStatus(BorrowedBooks.BorrowStatus.LATE.name());
+       borrowedBooksService.save(borrowedBook);
        finesRepository.save(fine);
     }
 

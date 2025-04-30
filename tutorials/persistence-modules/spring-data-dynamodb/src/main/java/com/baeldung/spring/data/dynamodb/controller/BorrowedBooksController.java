@@ -1,6 +1,5 @@
 package com.baeldung.spring.data.dynamodb.controller;
 
-import com.baeldung.spring.data.dynamodb.model.BorrowedBooks;
 import com.baeldung.spring.data.dynamodb.request.dto.BookReservation;
 import com.baeldung.spring.data.dynamodb.response.dto.BorrowedBooksDto;
 import com.baeldung.spring.data.dynamodb.service.BorrowedBooksService;
@@ -28,5 +27,11 @@ public class BorrowedBooksController {
     public ResponseEntity<Void> reserve(@RequestBody BookReservation bookReservation) {
         borrowedBooksService.reserve(bookReservation);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PutMapping("/borrowed-books/return/{borrowId}")
+    public ResponseEntity<Void> returnBook(@PathVariable String borrowId) {
+        borrowedBooksService.returnBook(borrowId);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
